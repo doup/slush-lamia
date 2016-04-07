@@ -93,11 +93,11 @@ project:
 
    ```bash
    # Clone your fork of the repo into the current directory
-   git clone https://github.com/<your-username>/slush-slush-lamia
+   git clone https://github.com/<your-username>/slush-lamia
    # Navigate to the newly cloned directory
-   cd slush-slush-lamia
+   cd slush-lamia
    # Assign the original repo to a remote called "upstream"
-   git remote add upstream https://github.com/doup/slush-slush-lamia
+   git remote add upstream https://github.com/doup/slush-lamia
    ```
 
 2. If you cloned a while ago, get the latest changes from upstream:

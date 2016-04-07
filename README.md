@@ -1,14 +1,13 @@
-# Slush Slush-lamia [![Build Status](https://secure.travis-ci.org/doup/slush-slush-lamia.png?branch=master)](https://travis-ci.org/doup/slush-slush-lamia) [![NPM version](https://badge-me.herokuapp.com/api/npm/slush-slush-lamia.png)](http://badges.enytc.com/for/npm/slush-slush-lamia)
+# slush-lamia [![Build Status](https://secure.travis-ci.org/doup/slush-lamia.png?branch=master)](https://travis-ci.org/doup/slush-lamia) [![NPM version](https://badge-me.herokuapp.com/api/npm/slush-lamia.png)](http://badges.enytc.com/for/npm/slush-lamia)
 
 > Generator for Lamia static site generator
 
-
 ## Getting Started
 
-Install `slush-slush-lamia` globally:
+Install `slush-lamia` globally:
 
 ```bash
-$ npm install -g slush-slush-lamia
+$ npm install -g slush-lamia
 ```
 
 ### Usage
@@ -16,13 +15,13 @@ $ npm install -g slush-slush-lamia
 Create a new folder for your project:
 
 ```bash
-$ mkdir my-slush-slush-lamia
+$ mkdir my-slush-lamia
 ```
 
 Run the generator from within the new folder:
 
 ```bash
-$ cd my-slush-slush-lamia && slush slush-lamia
+$ cd my-slush-lamia && slush slush-lamia
 ```
 
 ## Getting To Know Slush
@@ -35,12 +34,13 @@ To find out more about Slush, check out the [documentation](https://github.com/s
 
 ## Contributing
 
-See the [CONTRIBUTING Guidelines](https://github.com/doup/slush-slush-lamia/blob/master/CONTRIBUTING.md)
+See the [CONTRIBUTING Guidelines](https://github.com/doup/slush-lamia/blob/master/CONTRIBUTING.md)
 
 ## Support
-If you have any problem or suggestion please open an issue [here](https://github.com/doup/slush-slush-lamia/issues).
 
-## License 
+If you have any problem or suggestion please open an issue [here](https://github.com/doup/slush-lamia/issues).
+
+## License
 
 The MIT License
 
@@ -66,4 +66,3 @@ HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
 WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
-
