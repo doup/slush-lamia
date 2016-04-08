@@ -38,44 +38,110 @@ var defaults = (function () {
         appName:     workingDirName,
         userName:    osUserName || format(user.name || ''),
         authorName:  user.name || '',
-        authorEmail: user.email || ''
+        authorEmail: user.email || '',
+        locales:     'en, es',
     };
 })();
 
 gulp.task('default', function (done) {
     var prompts = [{
         name:    'appName',
-        message: 'What is the name of your project?',
-        default: defaults.appName
+        message: 'Name of the project:',
+        default: defaults.appName,
     }, {
-        name:    'appDescription',
-        message: 'What is the description?'
+        name:     'appURL',
+        message:  'URL where it\'s going to be deployed:',
+        validate: function (a) {
+            if (require('url-regex')({ exact: true }).test(a)) {
+                return true;
+            } else {
+                return 'Please provide a valid URL.';
+            }
+        }
     }, {
-        name:    'appVersion',
-        message: 'What is the version of your project?',
-        default: '0.1.0'
+        name:    'locales',
+        message: 'Locales for i18n:',
+        default: defaults.locales,
+        validate: function (a) {
+            if (/^([a-zA-Z]{2})(\s*,\s*[a-zA-Z]{2})*$/.test(a)) {
+                return true;
+            } else {
+                return 'Please provide a comma separated list of two letter locales.';
+            }
+        },
+        filter: (a) => a.toLowerCase().replace(/ /g, '').split(','),
     }, {
-        name:    'authorName',
-        message: 'What is the author name?',
-        default: defaults.authorName
+        name:    'locale',
+        message: 'Default locale:',
+        validate: function (input, answers) {
+            if (answers.locales.indexOf(input) != -1) {
+                return true;
+            } else {
+                return 'Please provide one of this locales: '+ answers.locales.join(', ') +'.';
+            }
+        },
+        default: (a) => a.locales[0],
     }, {
-        name:    'authorEmail',
-        message: 'What is the author email?',
-        default: defaults.authorEmail
-    }, {
-        name:    'userName',
-        message: 'What is the github username?',
-        default: defaults.userName
-    }, {
+        name:    'jQuery',
+        message: 'Add jQuery:',
         type:    'confirm',
-        name:    'moveon',
-        message: 'Continue?'
+    }, {
+        name:    'cssFramework',
+        message: 'CSS Framework:',
+        type:    'list',
+        default: 'foundation6',
+        choices: [
+            { name: 'None', value: 'none' },
+            { name: 'Foundation 6', value: 'foundation6' },
+            { name: 'Bootstrap 3', value: 'bootstrap3' },
+        ]
+    }, {
+        name:    'iconSet',
+        message: 'Icon set:',
+        type:    'list',
+        default: 'fontawesome',
+        choices: [
+            { name: 'None', value: 'none' },
+            { name: 'Font-Awesome', value: 'fontawesome' },
+        ]
+    }, {
+        name:    'contentTypes',
+        message: 'Init content types:',
+        type:    'checkbox',
+        choices: [
+            { name: 'Post', value: 'post' },
+            { name: 'Page', value: 'page' },
+        ]
+    }, {
+        name:    'deployTarget',
+        message: 'Deploy target:',
+        type:    'list',
+        default: 's3',
+        choices: [
+            { name: 'Amazon S3', value: 's3' },
+            { name: 'GitHub Pages', value: 'github' },
+        ]
+    }, {
+        name:    'pictureSize',
+        message: 'Add picture size:',
+        type:    'checkbox',
+        choices: [
+            { name: 'Thumbnail (100x100 crop)', value: 'thumbnail', short: 'Thumbnail' },
+            { name: 'Medium (fit in 700x700)', value: 'medium', short: 'Medium' },
+            { name: 'Large (fit in 1024x1024)', value: 'large', short: 'Large' },
+        ]
+    }, {
+        name:    'confirm',
+        message: 'Continue?',
+        type:    'confirm'
     }];
 
     // Ask
     inquirer.prompt(prompts, function (answers) {
-        if (!answers.moveon) {
-            return done();
+        answers.appDomain = require('url').parse(answers.appURL).host;
+
+        if (!answers.confirm) {
+            return;
         }
 
         answers.appNameSlug = _.slugify(answers.appName);

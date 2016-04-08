@@ -1,5 +1,7 @@
 # TODO
 
+- [ ] Deploy GitHub
+
 ## Questions
 
 - Project name:
