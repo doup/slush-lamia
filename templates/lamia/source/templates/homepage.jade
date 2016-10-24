@@ -1,0 +1,34 @@
+extends ./layout.jade
+
+block body
+    .row.homepage
+        .large-12.columns
+            .wrapper
+                .intro
+                    h1= __('gra_full')
+                    img.show-for-medium-up.bird(src='/assets/bird.png')
+
+                - var events = find({ locale: locale, type: 'event', timestamp: { $gte: Date.now() } }).all()
+                if events.length
+                    .events
+                        h2= __('menu_events')
+                        ul
+                            each event in events
+                                li.event
+                                    h3
+                                        span.date: <i class="fa fa-fw fa-calendar"></i> #{isoDate(event.date)}
+                                        a(href='/'+ findOne({ locale: locale, events_index: true }).path +'#'+ event.hrefId)!= event.title +' &raquo;'
+
+                ul.articles.large-block-grid-2
+                    - var articles = find({ locale: locale, type: 'article', tags: { $in: show_tags } }).sort({ date: -1 }).all()
+                    each article, index in articles
+                        li.article(class=Math.floor(index/2) >= Math.floor(articles.length/2) ? 'last-row' : '')
+                            h3: a(href='/'+article.path)= article.title
+                            p.meta-data
+                                span: <i class="fa fa-fw fa-calendar"></i> #{isoDate(article.date)}
+                                span: <i class="fa fa-fw fa-clock-o"></i> #{__('x_minutes', article.readingTime)}
+                                if article.allow_comments
+                                    span: <i class="fa fa-fw fa-comment"></i> <a data-disqus-identifier="#{article.disqus_id}">0</a>
+                                if article.draft
+                                    span.draft: <i class="fa fa-fw fa-pencil"></i> DRAFT
+                            p!= article.snippet

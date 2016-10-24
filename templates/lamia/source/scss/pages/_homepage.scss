@@ -1,0 +1,100 @@
+@mixin bottom-separator {
+    margin-bottom: $half-padding;
+    border-bottom: 1px solid $light-grey-color;
+}
+
+.homepage {
+    .intro {
+        position: relative;
+        padding: 0 0 1em;
+        @include bottom-separator;
+
+        h1 {
+            position: relative;
+            color: $primary-color;
+            text-align: center;
+            z-index: 10;
+        }
+
+        .bird {
+            width: 362px;
+            height: 147px;
+            position: absolute;
+            right: 0px;
+            bottom: 0px;
+            z-index: 9;
+        }
+    }
+
+    @media #{$medium-up} {
+        .intro {
+            padding: 3em 0 4em;
+        }
+    }
+
+    .events {
+        @include bottom-separator;
+
+        h2 {
+            font-size: 0.8em;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #666;
+        }
+
+        ul {
+            margin: 0;
+
+            li {
+                list-style-type: none;
+
+                h3 {
+                    font-size: 1em;
+                    letter-spacing: 0.1em;
+                    text-transform: uppercase;
+
+                    .date {
+                        color: $grey-color;
+                        margin-right: $quarter-padding;
+                    }
+                }
+            }
+        }
+    }
+
+    .articles {
+        .article {
+            font-size: 1.1em;
+            text-align: justify;
+            margin-bottom: $half-padding;
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+
+            // Fading gradient
+            &:before {
+                content: '';
+                width: 100%;
+                height: 100px;
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                background: linear-gradient(transparent 30px, white);
+            }
+
+            &.last-row, p:last-child {
+                margin-bottom: 0;
+            }
+
+            h3 {
+                text-align: left;
+                line-height: 1.3em;
+                margin-bottom: ($quarter-padding / 2);
+            }
+
+            p {
+                line-height: 1.7em;
+            }
+        }
+    }
+}

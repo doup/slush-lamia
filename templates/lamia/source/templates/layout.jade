@@ -1,0 +1,90 @@
+include ../../node_modules/lamia/src/jade/mixins.jade
+
+-
+    var meta = {}
+
+    meta.sitename = __('gra_full') + ' (GRA)'
+    meta.title    = subtitle ? (title +': '+ subtitle) : title
+    meta.title    = meta.title.length > 70 ? title : meta.title
+    meta.author   = authors ? authors.join(', ') : 'GRA'
+    meta.excerpt  = excerpt ? excerpt : null
+    meta.snippet  = snippet ? (snippet + '…') : ''
+    meta.keywords = (keywords || []).join(', ')
+    meta.base_url = 'http://www.grupreflexioautonomia.org'
+    meta.url      = meta.base_url +'/'+ path
+
+    meta.facebook        = {}
+    meta.facebook.type   = type == 'article' ? 'article' : ''
+    meta.facebook.admins = '100007382887358'
+
+    meta.twitter      = {}
+    meta.twitter.site = '@grautonomia'
+
+    meta.schema      = {}
+    meta.schema.type = type == 'article' ? 'http://schema.org/Article' : 'http://schema.org/WebPage'
+
+    if (social_img) {
+        meta.facebook.img = meta.base_url +socialImage(id, 'large')
+        meta.twitter.card = 'summary_large_image'
+        meta.twitter.img  = meta.base_url +socialImage(id, 'medium')
+        meta.schema.img   = meta.base_url +socialImage(id, 'large')
+    } else {
+        meta.facebook.img = meta.base_url +'/assets/avatar_large.jpg'
+        meta.twitter.card = 'summary'
+        meta.twitter.img  = meta.base_url +'/assets/avatar_small.jpg'
+        meta.schema.img   = meta.base_url +'/assets/avatar_large.jpg'
+    }    
+
+doctype html
+html(lang="#{locale}" itemscope itemtype=meta.schema.type)
+    head
+        meta(charset="utf-8")
+        meta(name='viewport' content='width=device-width, initial-scale=1.0')
+        meta(http-equiv="X-UA-Compatible" content="IE=edge,chrome=1")
+
+        link(href=url("/assets/main.css") rel="stylesheet" type="text/css")
+        link(href="http://fonts.googleapis.com/css?family=Domine:400,700|Roboto:400,400italic,700italic,700,500,500italic,300,300italic,900,100italic,100,900italic" rel="stylesheet" type="text/css")
+        //- link(rel="alternate" type="application/rss+xml" title="RSS" href="http://doup.illarra.com/rss.xml")
+
+        title #{meta.title} - #{meta.sitename}
+
+        +meta(meta)
+        +google-analytics()
+
+    body
+        .header
+            .row
+                .columns(class=(type == 'article') ? 'medium-9 large-8 medium-centered' : 'large-12')
+                    h1.title.left: a(href='/'+findOne({ id: 'index' }).lang(locale).path) GRA
+                    a(href="#" data-toggle-menu).show-for-small.hamburger.right <i class="fa fa-fw fa-bars"></i>
+                    div.right.menu-container(data-menu)
+                        ul.menu
+                            li: a(href='/'+findOne({ id: 'index' }).lang(locale).path)= __('menu_articles')
+                            li: a(href='/'+findOne({ id: 'others' }).lang(locale).path)= __('menu_others')
+                            li: a(href='/'+findOne({ id: 'events' }).lang(locale).path)= __('menu_events')
+                            li: a(href='/'+findOne({ id: 'about' }).lang(locale).path)= __('menu_about')
+                            //-li: a(href='#') Enlaces
+                        ul.locales
+                            if locale != 'es' && typeof(lang('es').path) != 'undefined'
+                                li: a(href='/'+ lang('es').path) Castellano
+                            if locale != 'ca' && typeof(lang('ca').path) != 'undefined'
+                                li: a(href='/'+ lang('ca').path) Català
+
+        .content
+            block body
+
+        .footer
+            .row
+                .columns(class=(type == 'article') ? 'large-8 medium-centered' : 'large-12')
+                    p 2012–#{(new Date()).getFullYear()}, Barcelona &amp; Baix Montseny, #{__('gra_full')}
+                    p #{__('footer.content_license')}: <a href="http://creativecommons.org/licenses/by-sa/3.0/es/">Creative Commons (by-sa) 3.0</a>
+                    ul
+                        li: <a href="mailto:gra@pimienta.org"><i class="fa fa-envelope-o"></i> Email</a>
+                        li: <a href="http://democraciainclusiva.org/phplist/"><i class="fa fa-newspaper-o"></i> <em>Newsletter</em></a>
+                        li: <a href="http://twitter.com/grautonomia"><i class="fa fa-twitter"></i> Twitter</a>
+
+        script(src=url("/assets/main.js"))
+
+        +disqus-comments-counter()
+
+        block javascript

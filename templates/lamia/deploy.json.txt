@@ -1,0 +1,12 @@
+{
+    "type": "<%= deployTarget %>",
+    "config": {
+    <% if (deployTarget == 's3') { %>
+        "bucket":            "<%= appDomain %>",
+        "access_key_id":     "",
+        "secret_access_key": "",
+        "region":            "eu-west-1"
+    <% } else if (deployTarget == 'github') { %>
+    <% } %>
+    }
+}
